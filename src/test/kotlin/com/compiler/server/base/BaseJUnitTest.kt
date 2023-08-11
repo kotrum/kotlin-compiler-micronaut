@@ -10,29 +10,29 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class BaseJUnitTest {
 
-  @Autowired
-  private lateinit var testRunner: TestProjectRunner
+    @Autowired
+    private lateinit var testRunner: TestProjectRunner
 
-  fun test(vararg test: String) = testRunner.test(*test)
+    fun test(vararg test: String) = testRunner.test(*test)
 
-  fun testRaw(vararg test: String) = testRunner.testRaw(*test)
+    fun testRaw(vararg test: String) = testRunner.testRaw(*test)
 
-  fun runKoanTest(vararg testFile: String) {
-    val test = test(
-      *testFile,
-      koansUtilsFile
-    )
-    successTestCheck(test)
-  }
+    fun runKoanTest(vararg testFile: String) {
+        val test = test(
+            *testFile,
+            koansUtilsFile,
+        )
+        successTestCheck(test)
+    }
 
-  private fun successTestCheck(testResults: List<TestDescription>) {
-    testResults
-      .map { it.status }
-      .forEach {
-        Assertions.assertTrue(it == TestStatus.OK)
-      }
-  }
+    private fun successTestCheck(testResults: List<TestDescription>) {
+        testResults
+            .map { it.status }
+            .forEach {
+                Assertions.assertTrue(it == TestStatus.OK)
+            }
+    }
 
-  val koansUtilsFile =
-    "package koans.util\n\nfun String.toMessage() = \"The function '\$this' is implemented incorrectly\"\n\nfun String.toMessageInEquals() = toMessage().inEquals()\n\nfun String.inEquals() = this"
+    val koansUtilsFile =
+        "package koans.util\n\nfun String.toMessage() = \"The function '\$this' is implemented incorrectly\"\n\nfun String.toMessageInEquals() = toMessage().inEquals()\n\nfun String.inEquals() = this"
 }

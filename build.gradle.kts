@@ -32,7 +32,6 @@ val kotlinJsDependency: Configuration by configurations.creating {
         )
     }
 }
-
 val kotlinWasmDependency: Configuration by configurations.creating {
     isTransitive = false
     attributes {
@@ -57,7 +56,6 @@ val copyJSDependencies by tasks.creating(Copy::class) {
     from(files(Callable { kotlinJsDependency.map { zipTree(it) } }))
     into(libJSFolder)
 }
-
 val copyWasmDependencies by tasks.creating(Copy::class) {
     from(files(Callable { kotlinWasmDependency.map { zipTree(it) } }))
     into(libWasmFolder)

@@ -13,26 +13,26 @@ import java.io.OutputStream
 
 class StreamLambdaHandler : RequestStreamHandler {
 
-  companion object {
-    private var handler: SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse>? = null
+    companion object {
+        private var handler: SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse>? = null
 
-    init {
-      try {
-        handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(CompilerApplication::class.java)
-      } catch (e: ContainerInitializationException) {
-        // if we fail here. We re-throw the exception to force another cold start
-        e.printStackTrace()
-        throw RuntimeException("Could not initialize Spring Boot application", e)
-      }
+        init {
+            try {
+                handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(CompilerApplication::class.java)
+            } catch (e: ContainerInitializationException) {
+                // if we fail here. We re-throw the exception to force another cold start
+                e.printStackTrace()
+                throw RuntimeException("Could not initialize Spring Boot application", e)
+            }
+        }
     }
-  }
 
-  @Throws(IOException::class)
-  override fun handleRequest(
-    inputStream: InputStream,
-    outputStream: OutputStream,
-    context: Context
-  ) {
-    handler?.proxyStream(inputStream, outputStream, context)
-  }
+    @Throws(IOException::class)
+    override fun handleRequest(
+        inputStream: InputStream,
+        outputStream: OutputStream,
+        context: Context,
+    ) {
+        handler?.proxyStream(inputStream, outputStream, context)
+    }
 }
