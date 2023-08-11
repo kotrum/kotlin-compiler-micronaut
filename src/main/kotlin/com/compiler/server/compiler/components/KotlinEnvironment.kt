@@ -7,16 +7,16 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class KotlinEnvironmentConfiguration(val librariesFile: LibrariesFile) {
-    @Bean
-    fun kotlinEnvironment(): KotlinEnvironment {
-        val classPath =
-            listOfNotNull(librariesFile.jvm)
-                .flatMap {
-                    it.listFiles()?.toList()
-                        ?: error("No kotlin libraries found in: ${librariesFile.jvm.absolutePath}")
-                }
+  @Bean
+  fun kotlinEnvironment(): KotlinEnvironment {
+    val classPath =
+      listOfNotNull(librariesFile.jvm)
+        .flatMap {
+          it.listFiles()?.toList()
+            ?: error("No kotlin libraries found in: ${librariesFile.jvm.absolutePath}")
+        }
 
-        val additionalJsClasspath = listOfNotNull(librariesFile.js)
-        return KotlinEnvironment(classPath, additionalJsClasspath, listOfNotNull(librariesFile.wasm))
-    }
+    val additionalJsClasspath = listOfNotNull(librariesFile.js)
+    return KotlinEnvironment(classPath, additionalJsClasspath, listOfNotNull(librariesFile.wasm))
+  }
 }

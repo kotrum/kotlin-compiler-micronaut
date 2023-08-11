@@ -17,8 +17,8 @@ class KotlinFeatureSince180 : BaseExecutorTest() {
 
             println("The cube root of ${"$"}{num.toDouble()} is: " + cbrt(num.toDouble()))
             }
-            """.trimIndent(),
-            contains = "The cube root of 27.0 is: 3.0",
+      """.trimIndent(),
+            contains = "The cube root of 27.0 is: 3.0"
         )
     }
 
@@ -34,8 +34,8 @@ class KotlinFeatureSince180 : BaseExecutorTest() {
 
             println("The cube root of ${"$"}{negNum.toDouble()} is: " + cbrt(negNum.toDouble()))
             }
-            """.trimIndent(),
-            contains = "The cube root of -27.0 is: -3.0",
+      """.trimIndent(),
+            contains = "The cube root of -27.0 is: -3.0"
         )
     }
 
@@ -60,8 +60,9 @@ class KotlinFeatureSince180 : BaseExecutorTest() {
             println(mark2 > mark1)
             }
         }
-            """.trimIndent(),
-            contains = "true",
+      """.trimIndent(),
+            contains = "true"
         )
     }
 }
+

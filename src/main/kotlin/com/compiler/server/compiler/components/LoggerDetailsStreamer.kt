@@ -10,24 +10,24 @@ import org.springframework.stereotype.Component
 @Component
 @Profile("prod")
 class LoggerDetailsStreamer {
-    private val log = LoggerFactory.getLogger(LoggerDetailsStreamer::class.java)
+  private val log = LoggerFactory.getLogger(LoggerDetailsStreamer::class.java)
 
-    fun logExecutionResult(executionResult: ExecutionResult, type: ProjectType, version: String) {
-        log.info(
-            Markers.appendFields(
-                ExecutionDetails(
-                    hasErrors = executionResult.hasErrors(),
-                    confType = type.toString(),
-                    version = version,
-                ),
-            ),
-            "Code execution is complete.",
+  fun logExecutionResult(executionResult: ExecutionResult, type: ProjectType, version: String) {
+    log.info(
+      Markers.appendFields(
+        ExecutionDetails(
+          hasErrors = executionResult.hasErrors(),
+          confType = type.toString(),
+          version = version
         )
-    }
-
-    private data class ExecutionDetails(
-        val hasErrors: Boolean,
-        val confType: String,
-        val version: String,
+      ),
+      "Code execution is complete."
     )
+  }
+
+  private data class ExecutionDetails(
+    val hasErrors: Boolean,
+    val confType: String,
+    val version: String
+  )
 }

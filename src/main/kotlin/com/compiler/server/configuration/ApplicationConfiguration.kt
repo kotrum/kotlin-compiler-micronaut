@@ -14,30 +14,30 @@ import java.io.File
 @Configuration
 @EnableConfigurationProperties(value = [LibrariesFolderProperties::class])
 class ApplicationConfiguration(
-    @Value("\${kotlin.version}") private val version: String,
-    private val librariesFolderProperties: LibrariesFolderProperties,
+  @Value("\${kotlin.version}") private val version: String,
+  private val librariesFolderProperties: LibrariesFolderProperties
 ) : WebMvcConfigurer {
-    override fun addFormatters(registry: FormatterRegistry) {
-        registry.addConverter(ProjectConverter())
-    }
+  override fun addFormatters(registry: FormatterRegistry) {
+    registry.addConverter(ProjectConverter())
+  }
 
-    @Bean
-    fun versionInfo() = VersionInfo(
-        version = version,
-        stdlibVersion = version,
-    )
+  @Bean
+  fun versionInfo() = VersionInfo(
+    version = version,
+    stdlibVersion = version
+  )
 
-    @Bean
-    fun librariesFiles() = LibrariesFile(
-        File(librariesFolderProperties.jvm),
-        File(librariesFolderProperties.js),
-        File(librariesFolderProperties.wasm),
-    )
+  @Bean
+  fun librariesFiles() = LibrariesFile(
+    File(librariesFolderProperties.jvm),
+    File(librariesFolderProperties.js),
+    File(librariesFolderProperties.wasm)
+  )
 }
 
 @ConfigurationProperties(prefix = "libraries.folder")
 class LibrariesFolderProperties {
-    lateinit var jvm: String
-    lateinit var js: String
-    lateinit var wasm: String
+  lateinit var jvm: String
+  lateinit var js: String
+  lateinit var wasm: String
 }

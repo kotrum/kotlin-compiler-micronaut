@@ -11,16 +11,16 @@ val ACCESS_CONTROL_ALLOW_HEADER_VALUE: String = System.getenv("ACCESS_CONTROL_AL
 
 @Configuration
 class CorsConfiguration {
-    @Bean
-    fun corsFilter(): CorsFilter {
-        val source = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration().apply {
-            addAllowedHeader(ACCESS_CONTROL_ALLOW_HEADER_VALUE)
-            addAllowedOrigin(ACCESS_CONTROL_ALLOW_ORIGIN_VALUE)
-            addAllowedMethod("GET")
-            addAllowedMethod("POST")
-        }
-        source.registerCorsConfiguration("/**", config)
-        return CorsFilter(source)
+  @Bean
+  fun corsFilter(): CorsFilter {
+    val source = UrlBasedCorsConfigurationSource()
+    val config = CorsConfiguration().apply {
+      addAllowedHeader(ACCESS_CONTROL_ALLOW_HEADER_VALUE)
+      addAllowedOrigin(ACCESS_CONTROL_ALLOW_ORIGIN_VALUE)
+      addAllowedMethod("GET")
+      addAllowedMethod("POST")
     }
+    source.registerCorsConfiguration("/**", config)
+    return CorsFilter(source)
+  }
 }

@@ -17,49 +17,51 @@ import kotlin.test.assertContains
 import kotlin.test.assertNotNull
 
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class CompilerAPITest {
 
-    @Value("\${local.server.port}")
-    private var port = 0
+  @Value("\${local.server.port}")
+  private var port = 0
 
-    private val host: String = InetAddress.getLocalHost().hostAddress
+  private val host: String = InetAddress.getLocalHost().hostAddress
 
-    @Autowired
-    private lateinit var versionInfo: VersionInfo
+  @Autowired
+  private lateinit var versionInfo: VersionInfo
 
-    companion object {
-        private const val PROGRAM_RUN = "fun main() {\n println(\"Hello, world!!!\")\n}"
+  companion object {
+    private const val PROGRAM_RUN = "fun main() {\n println(\"Hello, world!!!\")\n}"
+  }
+
+  @Test
+  fun `run api kotlin snippet`() {
+    val version = versionInfo.version
+    listOf(
+      "/api/compiler/run",
+      "/api/$version/compiler/run"
+    ).forEach { url ->
+
+      val headers = HttpHeaders()
+      headers.contentType = MediaType.APPLICATION_JSON
+      val response = RestTemplate().postForObject(
+        getHost() + url,
+        HttpEntity(
+          jacksonObjectMapper().writeValueAsString(
+            generateSingleProject(PROGRAM_RUN)
+          ),
+          headers
+        ),
+        ExecutionResult::class.java
+      )
+      assertNotNull(response, "Empty response!")
+      assertContains(
+        response.text,
+        "Hello, world!!!",
+      )
     }
+  }
 
-    @Test
-    fun `run api kotlin snippet`() {
-        val version = versionInfo.version
-        listOf(
-            "/api/compiler/run",
-            "/api/$version/compiler/run",
-        ).forEach { url ->
 
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.APPLICATION_JSON
-            val response = RestTemplate().postForObject(
-                getHost() + url,
-                HttpEntity(
-                    jacksonObjectMapper().writeValueAsString(
-                        generateSingleProject(PROGRAM_RUN),
-                    ),
-                    headers,
-                ),
-                ExecutionResult::class.java,
-            )
-            assertNotNull(response, "Empty response!")
-            assertContains(
-                response.text,
-                "Hello, world!!!",
-            )
-        }
-    }
+  private fun getHost(): String = "http://$host:$port"
 
-    private fun getHost(): String = "http://$host:$port"
 }

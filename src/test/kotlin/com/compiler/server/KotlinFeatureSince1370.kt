@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test
 
 class KotlinFeatureSince1370 : BaseExecutorTest() {
 
-    @Test
-    fun `kotlin blog post 1370 feature 1`() {
-        run(
-            code = """
+  @Test
+  fun `kotlin blog post 1370 feature 1`() {
+    run(
+      code = """
         @OptIn(ExperimentalStdlibApi::class)
         fun main() {
             val needsZero = true
@@ -21,15 +21,15 @@ class KotlinFeatureSince1370 : BaseExecutorTest() {
             }
             println(ints) // [0, 3, 7, 42]
         }
-            """.trimIndent(),
-            contains = "[0, 3, 7, 42]",
-        )
-    }
+      """.trimIndent(),
+      contains = "[0, 3, 7, 42]"
+    )
+  }
 
-    @Test
-    fun `kotlin blog post 1370 feature 2`() {
-        run(
-            code = """
+  @Test
+  fun `kotlin blog post 1370 feature 2`() {
+    run(
+      code = """
         import kotlin.reflect.cast
         
         @OptIn(ExperimentalStdlibApi::class)
@@ -42,15 +42,15 @@ class KotlinFeatureSince1370 : BaseExecutorTest() {
             println(kClass.isInstance(10)) // false
             println(kClass.cast("abc")) // abc
         }
-            """.trimIndent(),
-            contains = "String\nkotlin.String\ntrue\nfalse\nabc",
-        )
-    }
+      """.trimIndent(),
+      contains = "String\nkotlin.String\ntrue\nfalse\nabc"
+    )
+  }
 
-    @Test
-    fun `kotlin blog post 1370 feature 3`() {
-        run(
-            code = """
+  @Test
+  fun `kotlin blog post 1370 feature 3`() {
+    run(
+      code = """
         @OptIn(ExperimentalStdlibApi::class)
         fun main() {
             val deque = ArrayDeque(listOf(1, 2, 3))
@@ -66,15 +66,15 @@ class KotlinFeatureSince1370 : BaseExecutorTest() {
             deque.removeLast()
             println(deque) // [1, 2, 3]
         }
-            """.trimIndent(),
-            contains = "[0, 1, 2, 3, 4]\n0\n4\n[1, 2, 3]",
-        )
-    }
+      """.trimIndent(),
+      contains = "[0, 1, 2, 3, 4]\n0\n4\n[1, 2, 3]"
+    )
+  }
 
-    @Test
-    fun `kotlin blog post 1370 feature 4`() {
-        run(
-            code = """
+  @Test
+  fun `kotlin blog post 1370 feature 4`() {
+    run(
+      code = """
         @OptIn(ExperimentalStdlibApi::class)
         fun main() {
             val list = listOf(1, 2, 3)
@@ -85,15 +85,15 @@ class KotlinFeatureSince1370 : BaseExecutorTest() {
             println(emptyList.randomOrNull()) // null
             println(emptyList.reduceOrNull { a, b -> a + b }) // null
         }
-            """.trimIndent(),
-            contains = "6\nnull\nnull",
-        )
-    }
+      """.trimIndent(),
+      contains = "6\nnull\nnull"
+    )
+  }
 
-    @Test
-    fun `kotlin blog post 1370 feature 5`() {
-        run(
-            code = """
+  @Test
+  fun `kotlin blog post 1370 feature 5`() {
+    run(
+      code = """
         @OptIn(ExperimentalStdlibApi::class)
         fun main() {
             val ints = (1..4).asSequence()
@@ -102,8 +102,10 @@ class KotlinFeatureSince1370 : BaseExecutorTest() {
             val sequence = ints.scan(0) { acc, elem -> acc + elem }
             println(sequence.toList()) // [0, 1, 3, 6, 10]
         }
-            """.trimIndent(),
-            contains = "10\n[0, 1, 3, 6, 10]",
-        )
-    }
+      """.trimIndent(),
+      contains = "10\n[0, 1, 3, 6, 10]"
+    )
+  }
+
+
 }
