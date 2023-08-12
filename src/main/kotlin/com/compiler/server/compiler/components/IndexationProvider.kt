@@ -2,20 +2,20 @@ package com.compiler.server.compiler.components
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.micronaut.context.annotation.Value
+import jakarta.inject.Singleton
 import model.ImportInfo
-import org.apache.commons.logging.LogFactory
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
+import org.slf4j.LoggerFactory
 import java.io.File
 
-@Component
+@Singleton
 class IndexationProvider(
   @Value("\${indexes.file}") private val indexesFileName: String,
   @Value("\${indexesJs.file}") private val indexesJsFileName: String
 ) {
   companion object {
     const val UNRESOLVED_REFERENCE_PREFIX = "Unresolved reference: "
-    private val log = LogFactory.getLog(IndexationProvider::class.java)
+    private val log = LoggerFactory.getLogger(IndexationProvider::class.java)
   }
 
   private val jvmIndexes: Map<String, List<ImportInfo>>? by lazy {

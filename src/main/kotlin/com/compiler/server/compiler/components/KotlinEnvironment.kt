@@ -2,11 +2,14 @@ package com.compiler.server.compiler.components
 
 import com.compiler.server.model.bean.LibrariesFile
 import component.KotlinEnvironment
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Factory
 
-@Configuration
-class KotlinEnvironmentConfiguration(val librariesFile: LibrariesFile) {
+@Factory
+class KotlinEnvironmentConfiguration(
+  private val librariesFile: LibrariesFile,
+) {
+
   @Bean
   fun kotlinEnvironment(): KotlinEnvironment {
     val classPath =

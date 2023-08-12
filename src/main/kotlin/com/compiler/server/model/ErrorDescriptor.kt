@@ -9,7 +9,7 @@ import model.Completion
 data class ErrorDescriptor(
   val interval: TextInterval,
   val message: String,
-  val severity: ProjectSeveriry,
+  val severity: ProjectSeverity,
   val className: String? = null,
   val imports: List<Completion>? = null
 )

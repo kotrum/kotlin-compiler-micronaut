@@ -2,10 +2,10 @@ package com.compiler.server.base
 
 import com.compiler.server.model.ErrorDescriptor
 import com.compiler.server.model.ExecutionResult
-import com.compiler.server.model.ProjectSeveriry
+import com.compiler.server.model.ProjectSeverity
 
 val ErrorDescriptor.isError: Boolean
-  get() = severity == ProjectSeveriry.ERROR
+  get() = severity == ProjectSeverity.ERROR
 
 val ExecutionResult.hasErrors: Boolean
   get() = errors.hasErrors

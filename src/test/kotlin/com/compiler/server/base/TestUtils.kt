@@ -19,7 +19,7 @@ internal fun errorContains(highlights: Map<String, List<ErrorDescriptor>>, messa
                 "\n" +
           renderErrorDescriptors(highlights.values.flatten())
     }
-    Assertions.assertTrue(highlights.values.flatten().map { it.severity }.any { it == ProjectSeveriry.ERROR })
+    Assertions.assertTrue(highlights.values.flatten().map { it.severity }.any { it == ProjectSeverity.ERROR })
 }
 
 internal fun warningContains(highlights: Map<String, List<ErrorDescriptor>>, message: String) {
@@ -29,5 +29,5 @@ internal fun warningContains(highlights: Map<String, List<ErrorDescriptor>>, mes
           renderErrorDescriptors(highlights.values.flatten())
     }
     Assertions.assertTrue(highlights.values.flatten().map { it.className }.any { it == "WARNING" })
-    Assertions.assertTrue(highlights.values.flatten().map { it.severity }.any { it == ProjectSeveriry.WARNING })
+    Assertions.assertTrue(highlights.values.flatten().map { it.severity }.any { it == ProjectSeverity.WARNING })
 }

@@ -2,7 +2,7 @@ package com.compiler.server.executor
 
 import com.compiler.server.model.ProgramOutput
 import com.compiler.server.utils.escapeString
-import org.springframework.stereotype.Component
+import jakarta.inject.Singleton
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -11,7 +11,7 @@ import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-@Component
+@Singleton
 class JavaExecutor {
 
   companion object {

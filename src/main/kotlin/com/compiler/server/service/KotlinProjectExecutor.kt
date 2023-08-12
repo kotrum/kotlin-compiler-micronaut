@@ -5,13 +5,13 @@ import com.compiler.server.compiler.components.*
 import com.compiler.server.model.*
 import com.compiler.server.model.bean.VersionInfo
 import component.KotlinEnvironment
+import jakarta.inject.Singleton
 import model.Completion
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
 import org.jetbrains.kotlin.psi.KtFile
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 
-@Component
+@Singleton
 class KotlinProjectExecutor(
   private val kotlinCompiler: KotlinCompiler,
   private val completionProvider: CompletionProvider,

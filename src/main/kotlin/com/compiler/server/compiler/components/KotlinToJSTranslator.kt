@@ -2,6 +2,7 @@ package com.compiler.server.compiler.components
 
 import com.compiler.server.model.*
 import component.KotlinEnvironment
+import jakarta.inject.Singleton
 import org.jetbrains.kotlin.backend.common.phaser.PhaseConfig
 import org.jetbrains.kotlin.backend.wasm.compileToLoweredIr
 import org.jetbrains.kotlin.backend.wasm.compileWasm
@@ -22,9 +23,8 @@ import org.jetbrains.kotlin.js.facade.exceptions.TranslationException
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.CompilerEnvironment
-import org.springframework.stereotype.Service
 
-@Service
+@Singleton
 class KotlinToJSTranslator(
   private val kotlinEnvironment: KotlinEnvironment,
   private val errorAnalyzer: ErrorAnalyzer

@@ -1,10 +1,10 @@
 package com.compiler.server.controllers
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 
-@RestController
+@Controller
 class HealthRestController {
-  @GetMapping("/health")
+  @Get("/health")
   fun healthEndpoint() = "OK"
 }

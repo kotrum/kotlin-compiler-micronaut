@@ -3,7 +3,7 @@ package com.compiler.server
 import com.compiler.server.base.BaseExecutorTest
 import com.compiler.server.base.renderErrorDescriptors
 import com.compiler.server.model.ErrorDescriptor
-import com.compiler.server.model.ProjectSeveriry
+import com.compiler.server.model.ProjectSeverity
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertNotNull
@@ -47,7 +47,7 @@ class ResourceCompileTest : BaseExecutorTest() {
   }
 
   private fun validateErrors(errors: Map<String, List<ErrorDescriptor>>): String? {
-    val errs = errors.map { it.value }.flatten().filter { it.severity == ProjectSeveriry.ERROR }
+    val errs = errors.map { it.value }.flatten().filter { it.severity == ProjectSeverity.ERROR }
     if (errs.isNotEmpty()) {
       return renderErrorDescriptors(errs)
     }

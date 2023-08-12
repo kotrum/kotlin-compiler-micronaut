@@ -1,7 +1,9 @@
 package com.compiler.server.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import io.micronaut.serde.annotation.Serdeable
 
+@Serdeable.Serializable
 open class ExecutionResult(
   open var errors: Map<String, List<ErrorDescriptor>> = emptyMap(),
   open var exception: ExceptionDescriptor? = null
@@ -16,23 +18,26 @@ open class ExecutionResult(
   }
 
   fun hasErrors() =
-    textWithError() || exception != null || errors.any { (_, value) -> value.any { it.severity == ProjectSeveriry.ERROR } }
+    textWithError() || exception != null || errors.any { (_, value) -> value.any { it.severity == ProjectSeverity.ERROR } }
 
   private fun textWithError() = text.startsWith(ERROR_STREAM_START)
 }
 
+@Serdeable.Serializable
 abstract class TranslationResultWithJsCode(
   open val jsCode: String?,
   errors: Map<String, List<ErrorDescriptor>>,
   exception: ExceptionDescriptor?
 ) : ExecutionResult(errors, exception)
 
+@Serdeable.Serializable
 data class TranslationJSResult(
   override val jsCode: String? = null,
   override var exception: ExceptionDescriptor? = null,
   override var errors: Map<String, List<ErrorDescriptor>> = emptyMap()
 ) : TranslationResultWithJsCode(jsCode, errors, exception)
 
+@Serdeable.Serializable
 data class TranslationWasmResult(
   override val jsCode: String? = null,
   val jsInstantiated: String,
@@ -41,6 +46,7 @@ data class TranslationWasmResult(
   override var errors: Map<String, List<ErrorDescriptor>> = emptyMap()
 ) : TranslationResultWithJsCode(jsCode, errors, exception)
 
+@Serdeable.Serializable
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 class JunitExecutionResult(
   val testResults: Map<String, List<TestDescription>> = emptyMap(),

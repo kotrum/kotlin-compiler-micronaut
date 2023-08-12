@@ -6,6 +6,7 @@ import com.compiler.server.model.Analysis
 import com.compiler.server.model.ErrorDescriptor
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
+import jakarta.inject.Singleton
 import model.Completion
 import model.Icon
 import model.completionTextFromFullName
@@ -30,9 +31,8 @@ import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
 import org.jetbrains.kotlin.resolve.scopes.MemberScope
 import org.jetbrains.kotlin.types.asFlexibleType
 import org.jetbrains.kotlin.types.isFlexible
-import org.springframework.stereotype.Component
 
-@Component
+@Singleton
 class CompletionProvider(
   private val errorAnalyzer: ErrorAnalyzer,
   private val indexationProvider: IndexationProvider

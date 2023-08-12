@@ -2,7 +2,6 @@ package com.compiler.server.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 open class ExceptionDescriptor(
   val message: String? = null,

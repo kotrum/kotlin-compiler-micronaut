@@ -2,32 +2,23 @@ package com.compiler.server.configuration
 
 import com.compiler.server.model.bean.LibrariesFile
 import com.compiler.server.model.bean.VersionInfo
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.format.FormatterRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import io.micronaut.context.annotation.ConfigurationProperties
+import io.micronaut.context.annotation.Factory
 import java.io.File
+import javax.inject.Singleton
 
-@Configuration
-@EnableConfigurationProperties(value = [LibrariesFolderProperties::class])
+@Factory
 class ApplicationConfiguration(
-  @Value("\${kotlin.version}") private val version: String,
-  private val librariesFolderProperties: LibrariesFolderProperties
-) : WebMvcConfigurer {
-  override fun addFormatters(registry: FormatterRegistry) {
-    registry.addConverter(ProjectConverter())
-  }
-
-  @Bean
+  private val librariesFolderProperties: LibrariesFolderProperties,
+  private val versionInfoProperties: VersionInfoProperties
+) {
+  @Singleton
   fun versionInfo() = VersionInfo(
-    version = version,
-    stdlibVersion = version
+    version = versionInfoProperties.version,
+    stdlibVersion = versionInfoProperties.version
   )
 
-  @Bean
+  @Singleton
   fun librariesFiles() = LibrariesFile(
     File(librariesFolderProperties.jvm),
     File(librariesFolderProperties.js),
@@ -35,9 +26,14 @@ class ApplicationConfiguration(
   )
 }
 
-@ConfigurationProperties(prefix = "libraries.folder")
+@ConfigurationProperties("libraries.folder")
 class LibrariesFolderProperties {
   lateinit var jvm: String
   lateinit var js: String
   lateinit var wasm: String
+}
+
+@ConfigurationProperties("kotlin")
+class VersionInfoProperties {
+  lateinit var version: String
 }

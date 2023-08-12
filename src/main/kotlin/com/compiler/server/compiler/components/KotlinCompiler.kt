@@ -8,6 +8,8 @@ import com.compiler.server.model.bean.LibrariesFile
 import component.KotlinEnvironment
 import executors.JUnitExecutors
 import executors.JavaRunnerExecutor
+import io.micronaut.context.annotation.Value
+import jakarta.inject.Singleton
 import org.jetbrains.kotlin.backend.common.phaser.PhaseConfig
 import org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory
 import org.jetbrains.kotlin.backend.jvm.jvmPhases
@@ -22,14 +24,12 @@ import org.jetbrains.kotlin.codegen.state.GenerationState
 import org.jetbrains.kotlin.config.JVMConfigurationKeys
 import org.jetbrains.kotlin.config.LanguageVersionSettingsImpl
 import org.jetbrains.kotlin.psi.KtFile
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
-@Component
+@Singleton
 class KotlinCompiler(
   private val errorAnalyzer: ErrorAnalyzer,
   private val kotlinEnvironment: KotlinEnvironment,

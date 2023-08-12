@@ -1,6 +1,6 @@
 package com.compiler.server.utils
 
-fun escapeString(string: String): String? {
+fun escapeString(string: String): String {
   var resultString = string
   if (resultString.isNotEmpty()) {
     if (resultString.contains("<")) {

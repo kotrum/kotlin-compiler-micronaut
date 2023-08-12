@@ -2,7 +2,7 @@ package com.compiler.server.compiler.components
 
 import com.compiler.server.model.Analysis
 import com.compiler.server.model.ErrorDescriptor
-import com.compiler.server.model.ProjectSeveriry
+import com.compiler.server.model.ProjectSeverity
 import com.compiler.server.model.TextInterval
 import com.intellij.openapi.util.Pair
 import com.intellij.psi.PsiElement
@@ -10,6 +10,7 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.PsiFile
 import component.KotlinEnvironment
+import jakarta.inject.Singleton
 import model.Completion
 import org.jetbrains.kotlin.analyzer.AnalysisResult
 import org.jetbrains.kotlin.cli.jvm.compiler.CliBindingTrace
@@ -42,9 +43,8 @@ import org.jetbrains.kotlin.resolve.lazy.KotlinCodeAnalyzer
 import org.jetbrains.kotlin.resolve.lazy.ResolveSession
 import org.jetbrains.kotlin.resolve.lazy.declarations.DeclarationProviderFactory
 import org.jetbrains.kotlin.resolve.lazy.declarations.FileBasedDeclarationProviderFactory
-import org.springframework.stereotype.Component
 
-@Component
+@Singleton
 class ErrorAnalyzer(
   private val kotlinEnvironment: KotlinEnvironment,
   private val indexationProvider: IndexationProvider
@@ -143,7 +143,7 @@ class ErrorAnalyzer(
   }
 
   fun isOnlyWarnings(errors: Map<String, List<ErrorDescriptor>>) =
-    errors.none { it.value.any { error -> error.severity == ProjectSeveriry.ERROR } }
+    errors.none { it.value.any { error -> error.severity == ProjectSeverity.ERROR } }
 
   private fun anylizeErrorsFrom(file: PsiFile, isJs: Boolean): List<ErrorDescriptor> {
     class Visitor : PsiElementVisitor() {
@@ -164,7 +164,7 @@ class ErrorAnalyzer(
           currentDocument = file.viewProvider.document!!
         ),
         message = it.errorDescription,
-        severity = ProjectSeveriry.ERROR,
+        severity = ProjectSeverity.ERROR,
         className = "red_wavy_line",
         imports = completionsForErrorMessage(it.errorDescription, isJs)
       )
@@ -238,7 +238,7 @@ class ErrorAnalyzer(
             diagnostic.psiFile.name to ErrorDescriptor(
               interval = interval,
               message = render,
-              severity = ProjectSeveriry.from(diagnostic.severity),
+              severity = ProjectSeverity.from(diagnostic.severity),
               className = className,
               imports = imports
             )

@@ -3,26 +3,27 @@ package com.compiler.server.controllers
 import com.compiler.server.model.*
 import com.compiler.server.model.bean.VersionInfo
 import com.compiler.server.service.KotlinProjectExecutor
-import org.springframework.web.bind.annotation.*
+import io.micronaut.http.annotation.*
+import javax.inject.Inject
 
-@RestController
-@RequestMapping(value = ["/api/compiler", "/api/**/compiler"])
-class CompilerRestController(private val kotlinProjectExecutor: KotlinProjectExecutor) {
-  @PostMapping("/run")
-  fun executeKotlinProjectEndpoint(@RequestBody project: Project): ExecutionResult {
+@Controller("/api/compiler")
+class CompilerRestController @Inject constructor(private val kotlinProjectExecutor: KotlinProjectExecutor) {
+
+  @Post("/run")
+  fun executeKotlinProjectEndpoint(@Body project: Project): ExecutionResult {
     return kotlinProjectExecutor.run(project)
   }
 
-  @PostMapping("/test")
-  fun testKotlinProjectEndpoint(@RequestBody project: Project): ExecutionResult {
+  @Post("/test")
+  fun testKotlinProjectEndpoint(project: Project): ExecutionResult {
     return kotlinProjectExecutor.test(project)
   }
 
-  @PostMapping("/translate")
+  @Post("/translate")
   fun translateKotlinProjectEndpoint(
-    @RequestBody project: Project,
-    @RequestParam(defaultValue = "false") ir: Boolean,
-    @RequestParam(defaultValue = "js") compiler: String
+    project: Project,
+    @QueryValue(defaultValue = "false") ir: Boolean,
+    @QueryValue(defaultValue = "js") compiler: String
   ): TranslationResultWithJsCode {
     if (!ir) {
       return kotlinProjectExecutor.convertToJs(project)
@@ -33,20 +34,21 @@ class CompilerRestController(private val kotlinProjectExecutor: KotlinProjectExe
     }
   }
 
-  @PostMapping("/complete")
+  @Post("/complete")
   fun getKotlinCompleteEndpoint(
-    @RequestBody project: Project,
-    @RequestParam line: Int,
-    @RequestParam ch: Int
+    project: Project,
+    @QueryValue line: Int,
+    @QueryValue ch: Int
   ) = kotlinProjectExecutor.complete(project, line, ch)
 
-  @PostMapping("/highlight")
-  fun highlightEndpoint(@RequestBody project: Project): Map<String, List<ErrorDescriptor>> =
+  @Post("/highlight")
+  fun highlightEndpoint(project: Project): Map<String, List<ErrorDescriptor>> =
     kotlinProjectExecutor.highlight(project)
 }
 
-@RestController
-class VersionRestController(private val kotlinProjectExecutor: KotlinProjectExecutor) {
-  @GetMapping("/versions")
+@Controller("/versions")
+class VersionRestController @Inject constructor(private val kotlinProjectExecutor: KotlinProjectExecutor) {
+
+  @Get
   fun getKotlinVersionEndpoint(): List<VersionInfo> = listOf(kotlinProjectExecutor.getVersion())
 }

@@ -2,13 +2,11 @@ package com.compiler.server.compiler.components
 
 import com.compiler.server.model.ExecutionResult
 import com.compiler.server.model.ProjectType
+import jakarta.inject.Singleton
 import net.logstash.logback.marker.Markers
 import org.slf4j.LoggerFactory
-import org.springframework.context.annotation.Profile
-import org.springframework.stereotype.Component
 
-@Component
-@Profile("prod")
+@Singleton
 class LoggerDetailsStreamer {
   private val log = LoggerFactory.getLogger(LoggerDetailsStreamer::class.java)
 

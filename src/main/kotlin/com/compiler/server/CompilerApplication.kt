@@ -1,11 +1,10 @@
 package com.compiler.server
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import io.micronaut.runtime.Micronaut.run
 
-@SpringBootApplication
 class CompilerApplication
 
 fun main(args: Array<String>) {
-  runApplication<CompilerApplication>(*args)
+  val cts = run(*args)
+  println(cts)
 }
